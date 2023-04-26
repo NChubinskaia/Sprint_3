@@ -8,10 +8,10 @@ from random import choice
 
 @pytest.fixture
 def get_driver(request):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--window-size=1280,720')
-    driver = webdriver.Chrome(options=chrome_options)
+    #chrome_options = webdriver.ChromeOptions()
+    #chrome_options.add_argument('--headless')
+    #chrome_options.add_argument('--window-size=1280,720')
+    driver = webdriver.Chrome()    #(options=chrome_options)
     request.cls.driver = driver
     yield
     driver.quit()
