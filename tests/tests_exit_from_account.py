@@ -1,25 +1,25 @@
-import pytest
-
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from test_locators import TestLocators
 
+user_email_in_db = 'chubinskaia_9148@gmail.com'
+user_pass_in_db = 'sprint3'
 
-@pytest.mark.usefixtures("get_driver", "create_user")
+
 class TestExitFromAccount:
 
-    def test_exit_from_user_account_true(self):
-        self.driver.get("https://stellarburgers.nomoreparties.site/login")
+    def test_exit_from_user_account_true(self, driver):
+        driver.get("https://stellarburgers.nomoreparties.site/login")
 
-        self.driver.find_element(*TestLocators.LOGIN_EMAIL_INPUT).send_keys(self.existing_user_email)
-        self.driver.find_element(*TestLocators.LOGIN_PASSWORD_INPUT).send_keys(self.existing_user_pass)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON).click()
-        WebDriverWait(self.driver, 3).until(
+        driver.find_element(*TestLocators.LOGIN_EMAIL_INPUT).send_keys(user_email_in_db)
+        driver.find_element(*TestLocators.LOGIN_PASSWORD_INPUT).send_keys(user_pass_in_db)
+        driver.find_element(*TestLocators.LOGIN_BUTTON).click()
+        WebDriverWait(driver, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.HEADER_MAIN_PAGE))
-        self.driver.find_element(*TestLocators.USER_ACCOUNT_BUTTON).click()
-        WebDriverWait(self.driver, 3).until(
+        driver.find_element(*TestLocators.USER_ACCOUNT_BUTTON).click()
+        WebDriverWait(driver, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.PROFILE_LINK))
-        self.driver.find_element(*TestLocators.PROFILE_QUIT_BUTTON).click()
-        WebDriverWait(self.driver, 3).until(
+        driver.find_element(*TestLocators.PROFILE_QUIT_BUTTON).click()
+        WebDriverWait(driver, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.LOGIN_HEADER))
-        assert '/login' in self.driver.current_url
+        assert '/login' in driver.current_url, f'Не совпадает с текущим URL - "{driver.current_url}"'
